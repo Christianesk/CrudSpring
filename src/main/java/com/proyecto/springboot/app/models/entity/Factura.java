@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -87,6 +88,8 @@ public class Factura implements Serializable{
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
+	
+	@XmlTransient
 	public Cliente getCliente() {
 		return cliente;
 	}

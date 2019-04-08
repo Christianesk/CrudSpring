@@ -89,7 +89,8 @@ public class ClienteController {
 	}
 
 	@RequestMapping(value = {"/listar","/"}, method = RequestMethod.GET)
-	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model,Authentication authentication,HttpServletRequest request,Locale locale) {
+	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model,Authentication authentication,HttpServletRequest request,Locale locale,
+			@RequestParam(name = "format", defaultValue = "html") String format) {
 		
 		if (authentication!=null) {
 			logger.info("Hola usuario autenticado, tu username es:".concat(authentication.getName()));
@@ -115,15 +116,20 @@ public class ClienteController {
 			logger.info("Forma usando HttpServletRequest: Hola ".concat(authentication.getName()).concat("No tienes acceso!"));
 		}
 		
+		if (format.equals("html")) {
+			Pageable pageRequest = PageRequest.of(page, 5);
+
+			Page<Cliente> clientes = clienteService.findAll(pageRequest);
+
+			PageRender<Cliente> pageRender = new PageRender<Cliente>("/listar", clientes);
+			model.addAttribute("titulo", messageSource.getMessage("text.cliente.listar.titulo", null, locale));
+			model.addAttribute("clientes", clientes);
+			model.addAttribute("page", pageRender);
+		} else {
+
+			model.addAttribute("clientes", clienteService.findAll());
+		}
 		
-		Pageable pageRequest = PageRequest.of(page, 5);
-
-		Page<Cliente> clientes = clienteService.findAll(pageRequest);
-
-		PageRender<Cliente> pageRender = new PageRender<>("/listar", clientes);
-		model.addAttribute("titulo", messageSource.getMessage("text.cliente.listar.titulo", null, locale));
-		model.addAttribute("clientes", clientes);
-		model.addAttribute("page", pageRender);
 		return "listar";
 	}
 	

@@ -99,6 +99,8 @@ public class Cliente implements Serializable{
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
+	
+	
 	public List<Factura> getListaFacturas() {
 		return listaFacturas;
 	}
