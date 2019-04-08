@@ -35,7 +35,7 @@ public class FacturaPdfView extends AbstractPdfView{
 	protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		
+		response.setHeader("Content-Disposition", "attachment; filename=\"factura_.pdf\"");
 		Factura factura = (Factura)model.get("factura");
 		
 		Locale locale = localeResolver.resolveLocale(request);
