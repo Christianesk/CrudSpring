@@ -1,5 +1,6 @@
 package com.proyecto.springboot.app.view.csv;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,8 @@ public class ClienteCsvView extends AbstractView{
 		response.setContentType(getContentType());
 		
 		
-		Page<Cliente> clientes = (Page<Cliente>) model.get("clientes");
+		//Page<Cliente> clientes = (Page<Cliente>) model.get("clientes");
+		List<Cliente> clientes = (List<Cliente>) model.get("clientes");
 		
 		ICsvBeanWriter beanWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
 		
